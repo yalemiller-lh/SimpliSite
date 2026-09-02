@@ -40,5 +40,4 @@ npm run check
 
 ## Deployment
 
-The registry spreadsheet is created separately in Google Drive. See [docs/deployment.md](docs/deployment.md) for the exact Apps Script and web-app deployment steps.
-
+The generated [SimpliSite Document Registry](https://docs.google.com/spreadsheets/d/1CD4iMVqPBwjqPjT-Bh7gHr7SRX4yO8myxFKvjavK7h8/edit) is already connected in `src/Config.gs`. See [docs/deployment.md](docs/deployment.md) for the exact Apps Script and web-app deployment steps.
