@@ -32,10 +32,11 @@ Alternatively, create a standalone Apps Script project and copy the contents of 
 2. Choose **Web app**.
 3. Execute as **User accessing the web app**.
 4. Restrict access to the intended signed-in Google Workspace audience.
-5. Deploy and authorize the requested spreadsheet scope.
+5. Deploy and authorize the requested Google Sheets scope. Apps Script's
+   `SpreadsheetApp.openById()` requires the full Sheets scope even though
+   SimpliSite performs read-only operations.
 6. Open the deployment URL and confirm the two published sample documents appear while the draft row remains hidden.
 
 ## Updating
 
 Push source changes with `clasp push`, then update the existing Apps Script deployment to a new version.
-
