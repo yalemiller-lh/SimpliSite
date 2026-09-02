@@ -1,0 +1,83 @@
+<script>
+  (function () {
+    'use strict';
+
+    const status = document.getElementById('status');
+    const list = document.getElementById('document-list');
+    const count = document.getElementById('document-count');
+    const refreshButton = document.getElementById('refresh-button');
+
+    function loadDocuments() {
+      setLoading(true);
+      google.script.run
+        .withSuccessHandler(renderDocuments)
+        .withFailureHandler(renderError)
+        .listDocuments();
+    }
+
+    function setLoading(loading) {
+      refreshButton.disabled = loading;
+      if (loading) {
+        status.hidden = false;
+        status.className = 'status';
+        status.textContent = 'Loading documents…';
+        list.hidden = true;
+        count.textContent = '';
+      }
+    }
+
+    function renderDocuments(documents) {
+      list.replaceChildren();
+      refreshButton.disabled = false;
+
+      if (!Array.isArray(documents) || documents.length === 0) {
+        status.hidden = false;
+        status.className = 'status';
+        status.textContent = 'No published documents are available.';
+        count.textContent = '0 documents';
+        return;
+      }
+
+      documents.forEach(function (record) {
+        const item = document.createElement('li');
+        item.className = 'document-card';
+
+        const title = document.createElement('h3');
+        title.textContent = record.title;
+        item.appendChild(title);
+
+        if (record.description) {
+          const description = window.document.createElement('p');
+          description.textContent = record.description;
+          item.appendChild(description);
+        }
+
+        if (record.type) {
+          const type = window.document.createElement('span');
+          type.className = 'document-type';
+          type.textContent = record.type;
+          item.appendChild(type);
+        }
+
+        list.appendChild(item);
+      });
+
+      status.hidden = true;
+      list.hidden = false;
+      count.textContent = documents.length + (documents.length === 1 ? ' document' : ' documents');
+    }
+
+    function renderError(error) {
+      console.error(error);
+      refreshButton.disabled = false;
+      list.hidden = true;
+      count.textContent = '';
+      status.hidden = false;
+      status.className = 'status error';
+      status.textContent = 'SimpliSite could not load the document list. Try again or contact the site owner.';
+    }
+
+    refreshButton.addEventListener('click', loadDocuments);
+    loadDocuments();
+  })();
+</script>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_top">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?!= include_('Styles'); ?>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="shell">
+        <p class="eyebrow">Document library</p>
+        <h1>SimpliSite</h1>
+        <p class="lede">A simple list of published documents.</p>
+      </div>
+    </header>
+
+    <main class="shell" id="main-content">
+      <section aria-labelledby="documents-heading">
+        <div class="section-heading">
+          <div>
+            <h2 id="documents-heading">Documents</h2>
+            <p id="document-count" class="muted" aria-live="polite"></p>
+          </div>
+          <button id="refresh-button" class="secondary-button" type="button">
+            Refresh
+          </button>
+        </div>
+
+        <div id="status" class="status" role="status">Loading documents…</div>
+        <ul id="document-list" class="document-list" hidden></ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell">Powered by Google Apps Script</div>
+    </footer>
+
+    <?!= include_('ClientScript'); ?>
+  </body>
+</html>
+

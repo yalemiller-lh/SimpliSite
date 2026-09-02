@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import vm from "node:vm";
 
 const root = path.resolve(import.meta.dirname, "..");
 const requiredFiles = [
@@ -33,5 +34,16 @@ const config = fs.readFileSync(path.join(root, "src/Config.gs"), "utf8");
 if (config.includes("REPLACE_WITH")) {
   throw new Error("Config.gs still contains an undeployable placeholder.");
 }
+
+for (const file of ["Config.gs", "SheetRepository.gs", "DocumentService.gs", "WebApp.gs"]) {
+  new vm.Script(fs.readFileSync(path.join(root, "src", file), "utf8"), { filename: file });
+}
+
+const clientHtml = fs.readFileSync(path.join(root, "src/ClientScript.html"), "utf8");
+const clientMatch = clientHtml.match(/<script>([\s\S]*)<\/script>/);
+if (!clientMatch) {
+  throw new Error("ClientScript.html must contain one script block.");
+}
+new vm.Script(clientMatch[1], { filename: "ClientScript.html" });
 
 console.log("Repository structure and Apps Script configuration are valid.");
