@@ -1,0 +1,15 @@
+{
+  "name": "simplisite",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A minimal Google Apps Script web app that lists documents from a Google Sheet registry.",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "verify": "npm run test && npm run check"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
+
